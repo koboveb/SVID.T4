@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data_setting>
+
+#--Время обновления ms
+<TimeOut>555</TimeOut>
+
+#---Настройка доступа к базе
+<BaseCod>01.Внутренние документы</BaseCod>
+<BaseAdress>xx.xx.xx.xx</BaseAdress>
+<BaseName>BaseName</BaseName>
+
+<BaseSql>
+SELECT *
+FROM DOCUMENT 
+JOIN INTERNAL ON DOCUMENT.ID = INTERNAL.ID 
+JOIN INTERNAL_TO ON DOCUMENT.ID = INTERNAL_TO.ID 
+</BaseSql>
+
+<BaseSqlLevel>
+SELECT PARENT_ID
+FROM DOCUMENT 
+WHERE DOCUMENT.ID = '%' 
+</BaseSqlLevel>
+
+#---Настройки Диалогов и Полей
+
+<Dialog cod='01' name='Структура' >
+
+<Field cod='DOCUMENT.ID' name='Идентификатор'  type='Txt' width='110' ></Field>
+<Field cod='DOCUMENT.PARENT_ID' name='Родитель'  type='Txt' width='110' ></Field>
+<Field cod='DOC_NUMBER' name='Номер'  type='Txt' width='100' ></Field>
+<Field cod='DOCSTATUS_CAPTION' name='Статус'  type='Txt' width='110' >SELECT|TAB.CAPTION|DOCSTATUS AS TAB||</Field>
+<Field cod='DOC_DATE' name='Дата'  type='Dtd' width='80' ></Field>
+<Field cod='TEXT_HEADER' name='Заголовок к тексту'  type='Txt' width='400' ></Field>
+<Field cod='HAS_RESOLUTION' name='Резолюция'  type='Lst' width='50' >1.Да|0.Нет</Field>
+<Field cod='SUSER_FIO' name='ФИО автора'  type='Txt' width='280' >SELECT|TAB.SUSER_FIO|SYS_USERS AS TAB|TAB.SUSER_BLOCKED = 0 AND TAB.SUSER_IS_LDAP_USER = 1|</Field>
+
+</Dialog>
+
+<Dialog cod='03' name='Диалог2' >
+<Field cod='TEXT_BODY' name='Текст'  type='Txt' width='1200' ></Field>
+</Dialog>
+
+<Docum cod='11' name='11.Исполнительный лист'  level='0'>
+	<DField cod='DOC_NUMBER'></DField> 
+	<DField cod='DOCSTATUS_CAPTION'></DField>
+	<DField cod='DOC_DATE'></DField>
+</Docum>
+
+<Docum cod='12' name='12.Определение'  level='0'>
+	<DField cod='TEXT_HEADER'></DField> 
+</Docum>
+
+<Docum cod='21' name='21.Арест'  level='1'>
+	<DField cod='TEXT_BODY'></DField> 
+</Docum>
+
+
+<Docum cod='200' name='200.Подпись'  level='2'>
+	<DField cod='HAS_RESOLUTION'></DField>
+	<DField cod='SUSER_FIO'></DField>
+</Docum>
+
+<Docum cod='300' name='300.Резолюция'  level='2'>
+	<DField cod='HAS_RESOLUTION'></DField>
+</Docum>
+
+</data_setting>
